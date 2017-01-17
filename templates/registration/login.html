@@ -1,12 +1,12 @@
-
-
 {% extends "base.html" %}
 {% block title %}Main{% endblock %}
 {% block content %}
     <form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="hidden" name="next" value="{% url 'Main' %}">
+    <input type="hidden" name="next" value="{% url 'main' %}">
     <input type="submit" value="ok">
 </form>
+Or
+<a href="{% url 'user_create' %}">Create User</a>
 {% endblock %}
