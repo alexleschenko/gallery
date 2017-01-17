@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^$', views.MainPage.as_view(),name='main'),
     url(r'^create/$',views.UserCreate.as_view(),name='user_create'),
+    url(r'^profile/$',views.UserProfile.as_view(), name='user_profile')
 ]

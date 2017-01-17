@@ -10,6 +10,8 @@ class User_Info(models.Model):
     date_of_birth = models.DateField()
     country = models.CharField(max_length=25)
 
+
+
 class Image(models.Model):
     user = models.ForeignKey(User)
     image = models.ImageField(upload_to=settings.STATIC_ROOT)
