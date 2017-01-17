@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -11,5 +12,5 @@ class User_Info(models.Model):
 
 class Image(models.Model):
     user = models.ForeignKey(User)
-    image = models.ImageField()
+    image = models.ImageField(upload_to=settings.STATIC_ROOT)
 
