@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
@@ -30,13 +32,24 @@ class UserProfile(LoginRequiredMixin,DetailView):
         context['data']=User_Info.objects.filter(user=current_user.id).get()
         return context
 
-class ImagesList(ListView):
+class ImagesList(LoginRequiredMixin, ListView):
     model = Image
     template_name = 'Image_List.html'
     context_object_name = 'images'
 
 
+class AddImage(LoginRequiredMixin, CreateView):
+    form_class = forms.AddImage
+    template_name = 'upload.html'
+    success_url = '/images/'
 
+    def form_valid(self, form):
+        object = form.save(commit=False)
+        object.user = self.request.user
+        url = os.path.basename(object.image.name)
+        object.url = url
+        object.save()
+        return super(AddImage, self).form_valid(form)
 
 
 

@@ -16,10 +16,9 @@ class User_Info(models.Model):
 
 
 class Image(models.Model):
-    title = models.CharField(max_length=255, blank=True)
     user = models.ForeignKey(User, null=True)
     image = models.ImageField(upload_to=settings.MEDIA_ROOT)
-    url = models.CharField(max_length=25)
+    url = models.CharField(max_length=25, blank=True)
 
 
     def __str__(self):
