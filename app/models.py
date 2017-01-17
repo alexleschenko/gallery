@@ -10,9 +10,18 @@ class User_Info(models.Model):
     date_of_birth = models.DateField()
     country = models.CharField(max_length=25)
 
+    def __str__(self):
+        return self.user
+
 
 
 class Image(models.Model):
-    user = models.ForeignKey(User)
-    image = models.ImageField(upload_to=settings.STATIC_ROOT)
+    title = models.CharField(max_length=255, blank=True)
+    user = models.ForeignKey(User, null=True)
+    image = models.ImageField(upload_to=settings.MEDIA_ROOT)
+    url = models.CharField(max_length=25)
+
+
+    def __str__(self):
+        return self.user.username
 

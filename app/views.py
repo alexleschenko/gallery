@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 from app import forms
-from app.models import User_Info
-from django.views.generic import TemplateView, CreateView, DetailView
+from app.models import User_Info, Image
+from django.views.generic import TemplateView, CreateView, DetailView, ListView
 # Create your views here.
 
 
@@ -18,7 +18,7 @@ class UserCreate(CreateView):
     form_class = forms.UserCreateForm
     success_url = '/'
 
-class UserProfile(DetailView):
+class UserProfile(LoginRequiredMixin,DetailView):
     template_name = 'Profile.html'
 
     def get_object(self):
@@ -29,6 +29,13 @@ class UserProfile(DetailView):
         current_user = self.request.user
         context['data']=User_Info.objects.filter(user=current_user.id).get()
         return context
+
+class ImagesList(ListView):
+    model = Image
+    template_name = 'Image_List.html'
+    context_object_name = 'images'
+
+
 
 
 
