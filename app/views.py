@@ -30,6 +30,7 @@ class UserProfile(LoginRequiredMixin,DetailView):
         context = super(UserProfile, self).get_context_data(**kwargs)
         current_user = self.request.user
         context['data']=User_Info.objects.filter(user=current_user.id).get()
+        context['images']=Image.objects.filter(user=current_user.id)
         return context
 
 class ImagesList(LoginRequiredMixin, ListView):

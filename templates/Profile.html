@@ -2,6 +2,13 @@
 {% block title %}Profile{% endblock %}
 {% block content %}
     {{ data.country }}
+    <hr>
+    <p>User's Images</p>
+    {% for image in images %}
+        <img src="/media/{{ image.url }}" width="100">
+    {% endfor %}
+    <hr>
     <input type="button" onclick="history.back()" value="Back" >
+
 
 {% endblock %}
