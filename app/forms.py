@@ -9,16 +9,20 @@ from django.http import request
 from app.models import User_Info, Image
 
 class UserCreateForm(UserCreationForm):
-    email = forms.EmailField(required=True)
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ("username",  "password1", "password2")
+
+    def save(self, commit=True):
+        user=super(UserCreateForm, self).save(commit=False)
+        User_Info.objects.create(user=user.id, country='', date_of_birth='')
+
 
 class UserInfoUpdate(forms.ModelForm):
     class Meta(object):
         model = User_Info
-        exclude = ('id',)
+        exclude = ('id', 'user',)
 
 
 class AddImage(forms.ModelForm):

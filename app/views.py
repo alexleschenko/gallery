@@ -1,26 +1,31 @@
 import os
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
+from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView
+
 from app import forms
 from app.models import User_Info, Image
-from django.views.generic import TemplateView, CreateView, DetailView, ListView
+
+
 # Create your views here.
 
 
 
-class MainPage(LoginRequiredMixin,TemplateView):
+class MainPage(LoginRequiredMixin, TemplateView):
     template_name = 'main.html'
 
+
 class UserCreate(CreateView):
-
     model = User
-    template_name = 'CreateUser.html'
+    template_name = 'create_user.html'
     form_class = forms.UserCreateForm
-    success_url = '/'
+    success_url = '/profile/update/'
 
-class UserProfile(LoginRequiredMixin,DetailView):
+
+class UserProfile(LoginRequiredMixin, DetailView):
     template_name = 'Profile.html'
 
     def get_object(self):
@@ -29,13 +34,23 @@ class UserProfile(LoginRequiredMixin,DetailView):
     def get_context_data(self, **kwargs):
         context = super(UserProfile, self).get_context_data(**kwargs)
         current_user = self.request.user
-        context['data']=User_Info.objects.filter(user=current_user.id).get()
-        context['images']=Image.objects.filter(user=current_user.id)
+        context['data'] = User_Info.objects.filter(user=current_user.id).get()
         return context
+
+
+class UserProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = User_Info
+    template_name = 'user_update.html'
+    form_class = forms.UserInfoUpdate
+    success_url = '/'
+
+    def get_object(self):
+        return User_Info.objects.get(user=self.request.user)
+
 
 class ImagesList(LoginRequiredMixin, ListView):
     model = Image
-    template_name = 'Image_List.html'
+    template_name = 'images.html'
     context_object_name = 'images'
 
 
@@ -51,7 +66,3 @@ class AddImage(LoginRequiredMixin, CreateView):
         object.url = url
         object.save()
         return super(AddImage, self).form_valid(form)
-
-
-
-

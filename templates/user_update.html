@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Update{% endblock %}
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input class="c" type="submit" value="Update"/>
+    </form>
+    <input type="button" onclick="history.back()" value="Back" class="c">
+{% endblock %}

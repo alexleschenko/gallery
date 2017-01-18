@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^$', views.MainPage.as_view(),name='main'),
     url(r'^create/$',views.UserCreate.as_view(),name='user_create'),
     url(r'^profile/$',views.UserProfile.as_view(), name='user_profile'),
+    url(r'^profile/update/$', views.UserProfileUpdate.as_view(), name='user_update'),
     url(r'^images/$', views.ImagesList.as_view(), name='image_list'),
     url(r'^images/add/$', views.AddImage.as_view(), name='add_image')
 
