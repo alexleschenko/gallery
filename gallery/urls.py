@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 from app import views
 
@@ -27,11 +27,8 @@ urlpatterns = [
     url(r'^$', views.MainPage.as_view(),name='main'),
     url(r'^create/$',views.UserCreate.as_view(),name='user_create'),
     url(r'^profile/$',views.UserProfile.as_view(), name='user_profile'),
-    url(r'^profile/update/$', views.UserProfileUpdate.as_view(), name='user_update'),
     url(r'^images/$', views.ImagesList.as_view(), name='image_list'),
     url(r'^images/all/$', views.ImagesListAll.as_view(), name='image_list_all'),
     url(r'^images/add/$', views.AddImage.as_view(), name='add_image')
 
-]
-urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

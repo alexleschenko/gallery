@@ -13,15 +13,6 @@ def validate_image(fieldfile_obj):
         raise ValidationError("Max file size is %sMB" % str(megabyte_limit))
 
 # Create your models here.
-class User_Info(models.Model):
-    user = models.ForeignKey(User)
-    country = models.CharField(max_length=25, blank=True)
-    first_name = models.CharField(max_length=25, blank=True)
-    date_of_birth = models.DateField(null=True)
-
-    def __str__(self):
-        return self.user
-
 
 class Image(models.Model):
 

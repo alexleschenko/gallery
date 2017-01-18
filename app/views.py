@@ -1,6 +1,7 @@
 import os
 
 from django.conf import settings
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -11,7 +12,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView
 
 from app import forms
-from app.models import User_Info, Image
+from app.models import Image
 
 
 # Create your views here.
@@ -26,31 +27,25 @@ class UserCreate(CreateView):
     model = User
     template_name = 'create_user.html'
     form_class = forms.UserCreateForm
-    success_url = '/profile/update/'
+    success_url = '/'
 
 
 class UserProfile(LoginRequiredMixin, DetailView):
     template_name = 'Profile.html'
+    model = User
+    context_object_name = 'data'
 
     def get_object(self):
         return get_object_or_404(User, pk=self.request.user.id)
 
+
     def get_context_data(self, **kwargs):
         context = super(UserProfile, self).get_context_data(**kwargs)
         current_user = self.request.user
-        context['data'] = User_Info.objects.filter(user=current_user.id).get()
         context['images'] = Image.objects.filter(user=current_user.id)
         return context
 
 
-class UserProfileUpdate(LoginRequiredMixin, UpdateView):
-    model = User_Info
-    template_name = 'user_update.html'
-    form_class = forms.UserInfoUpdate
-    success_url = '/'
-
-    def get_object(self):
-        return User_Info.objects.get(user=self.request.user)
 
 
 class ImagesList(LoginRequiredMixin, ListView):
