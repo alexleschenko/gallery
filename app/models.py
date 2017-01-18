@@ -21,3 +21,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to=settings.MEDIA_ROOT, validators=[validate_image])
     url = models.CharField(max_length=25, blank=True)
 
+
+class UserDetail(models.Model):
+    country=models.CharField(max_length=100)
+    user=models.OneToOneField(User)

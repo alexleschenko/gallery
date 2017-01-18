@@ -2,12 +2,14 @@
 {% block title %}Images{% endblock %}
 {% block content %}
     <table>
-        {% for image in images %}
+        <div class="img-circle">{% for image in images %}
             <img src="/media/{{ image.url }}" width="100">
-        {% endfor %}
+        {% endfor %}</div>
+
     </table>
-    <a href="{% url 'image_list_all' %}" >See all in full size</a>
-    <a href="{% url 'add_image' %}" >Add Image</a><br>
-    <a href="{% url 'main' %}" >Back to main page</a>
+    <div class="navbar-btn"><a href="{% url 'image_list_all' %}" class="btn-link">See all in full size</a><br>
+        <a href="{% url 'add_image' %}" class="btn-link">Add Image</a><br>
+        <a href="{% url 'main' %}" class="btn-link">Back to main page</a><br></div>
+
 
 {% endblock %}

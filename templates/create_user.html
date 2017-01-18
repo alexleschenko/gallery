@@ -3,6 +3,6 @@
 {% block content %}
     <form action="" method="post">{% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="Create"  class="c"><br>
-        <input type="button" onclick="history.back()" value="Back">
+        <input type="submit" value="Create" class="btn-primary"><br>
+        <input type="button" onclick="history.back()" value="Back" class="btn-link">
 {% endblock %}

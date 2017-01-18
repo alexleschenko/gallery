@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Profile{% endblock %}
 {% block content %}
-    {{ data.country }}
+    <div class="text-info">    {{ data.country }}<br>
+        {{ data.first_name }}<br>
+        {{ data.email }}</div>
+
     <hr>
-    <p>User's Images</p>
+    <h3>User's Images</h3>
     {% for image in images %}
-        <img src="/media/{{ image.url }}" ><br>
+        <img src="/media/{{ image.url }}"><br>
         <br>
     {% endfor %}
     <hr>
-    <input type="button" onclick="history.back()" value="Back" >
+    <input type="button" onclick="history.back()" value="Back" class="btn-link">
 
 
 {% endblock %}
