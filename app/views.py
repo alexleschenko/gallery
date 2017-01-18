@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.core.checks import messages
+from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.http import request
 from django.shortcuts import get_object_or_404, redirect
@@ -66,18 +66,20 @@ class AddImage(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         object = form.save(commit=False)
-        object.user = self.request.user
-        url = os.path.basename(object.image.name)
-        url = url.replace(' ', '_')
-        object.url = url
-        object.save()
-        total_size=object.image.size
+        total_size = object.image.size
         limit = settings.MAX_STORAGE_SIZE
         user_file_total = Image.objects.filter(user=self.request.user.id)
         for i in user_file_total:
             total_size += i.image.size
         if total_size > limit * 1024 * 1024:
+            messages.error(self.request, 'Max storage size is {} MB'.format(limit))
             return redirect('/images/add/')
+        object.user = self.request.user
+        url = os.path.basename(object.image.name)
+        url = url.replace(' ', '_')
+        object.url = url
+        object.save()
+
         return super(AddImage, self).form_valid(form)
 
 

@@ -2,7 +2,10 @@
 {% block title %}Upload Image{% endblock %}
 {% block content %}
     <form action="{% url 'add_image' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
-        {% if form.error %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
         {% endif %}
         {{ form.as_p }}
         <input type="submit" value="Upload"  class="c"><br>
