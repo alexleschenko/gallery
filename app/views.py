@@ -63,6 +63,7 @@ class AddImage(LoginRequiredMixin, CreateView):
         object = form.save(commit=False)
         object.user = self.request.user
         url = os.path.basename(object.image.name)
+        url = url.replace(' ', '_')
         object.url = url
         object.save()
         return super(AddImage, self).form_valid(form)
