@@ -5,7 +5,8 @@
     <hr>
     <p>User's Images</p>
     {% for image in images %}
-        <img src="/media/{{ image.url }}" width="100">
+        <img src="/media/{{ image.url }}" ><br>
+        <br>
     {% endfor %}
     <hr>
     <input type="button" onclick="history.back()" value="Back" >

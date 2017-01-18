@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Images{% endblock %}
+{% block content %}
+    <table>
+    <a href="{% url 'main' %}" >Back to main page</a><br>
+        {% for image in images %}
+            <img src="/media/{{ image.url }}"><br><br>
+        {% endfor %}
+    </table>
+    <a href="{% url 'images_list' %}" >Back to images list</a>
+
+{% endblock %}

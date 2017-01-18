@@ -1,9 +1,13 @@
 import os
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
+from django.core.checks import messages
+from django.core.exceptions import ValidationError
+from django.http import request
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView
 
 from app import forms
@@ -35,6 +39,7 @@ class UserProfile(LoginRequiredMixin, DetailView):
         context = super(UserProfile, self).get_context_data(**kwargs)
         current_user = self.request.user
         context['data'] = User_Info.objects.filter(user=current_user.id).get()
+        context['images'] = Image.objects.filter(user=current_user.id)
         return context
 
 
@@ -66,4 +71,19 @@ class AddImage(LoginRequiredMixin, CreateView):
         url = url.replace(' ', '_')
         object.url = url
         object.save()
+        total_size=object.image.size
+        limit = settings.MAX_STORAGE_SIZE
+        user_file_total = Image.objects.filter(user=self.request.user.id)
+        for i in user_file_total:
+            total_size += i.image.size
+        if total_size > limit * 1024 * 1024:
+            return redirect('/images/add/')
         return super(AddImage, self).form_valid(form)
+
+
+
+
+class ImagesListAll(LoginRequiredMixin, ListView):
+    model = Image
+    template_name = 'images.html'
+    context_object_name = 'images'

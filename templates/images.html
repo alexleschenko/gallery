@@ -6,6 +6,7 @@
             <img src="/media/{{ image.url }}" width="100">
         {% endfor %}
     </table>
+    <a href="{% url 'image_list_all' %}" >See all in full size</a>
     <a href="{% url 'add_image' %}" >Add Image</a><br>
     <a href="{% url 'main' %}" >Back to main page</a>
 
