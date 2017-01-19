@@ -1,0 +1,17 @@
+dj-database-url==0.4.2
+Django==1.10.5
+django-ajax-forms==0.3.1b0
+django-bootstrap3==8.1.0
+django-bower==5.2.0
+django-crispy-forms==1.6.1
+django-forms-ajaxified==0.2
+django-libs==1.67.9
+django-multiupload==0.5.2
+gunicorn==19.6.0
+olefile==0.44
+Pillow==4.0.0
+python-magic==0.4.12
+six==1.10.0
+sorl-thumbnail==12.3
+whitenoise==3.2.3
+psycopg2==2.6.2
