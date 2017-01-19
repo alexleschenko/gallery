@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^profile/update/$', views.UserProfileUpdate.as_view(), name='user_update'),
     url(r'^images/$', views.ImagesList.as_view(), name='image_list'),
     url(r'^images/all/$', views.ImagesListAll.as_view(), name='image_list_all'),
-    url(r'^images/add/$', views.AddImage.as_view(), name='add_image')
+    url(r'^images/add/$', views.AddImage.as_view(), name='add_image'),
+    url(r'^images/delete/(?P<pk>\d+)/$', views.ImageDelete.as_view(), name='delete_image')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

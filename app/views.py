@@ -9,8 +9,10 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ValidationError
 from django.http import request
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView
+from django.views.generic.edit import DeleteView
 
 from app import forms
 from app.models import Image, UserDetail
@@ -97,3 +99,15 @@ class ImagesListAll(LoginRequiredMixin, ListView):
     model = Image
     template_name = 'images_all.html'
     context_object_name = 'images'
+
+class ImageDelete(LoginRequiredMixin, DeleteView):
+    model = Image
+    template_name = 'images_delete.html'
+    success_url = '/profile/'
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user.id != self.request.user.id:
+            return redirect('/profile/')
+        self.object.delete()
+        return HttpResponseRedirect(self.get_success_url())
