@@ -6,13 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ValidationError
 from django.http import request
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView, CreateView, DetailView, ListView, UpdateView
 
 from app import forms
-from app.models import Image
+from app.models import Image, UserDetail
 
 
 # Create your views here.
@@ -23,11 +24,15 @@ class MainPage(LoginRequiredMixin, TemplateView):
     template_name = 'main.html'
 
 
-class UserCreate(CreateView):
+
+class UserCreate(SuccessMessageMixin, CreateView):
+    success_message = 'Thanks for registration'
     model = User
     template_name = 'create_user.html'
     form_class = forms.UserCreateForm
     success_url = '/'
+
+
 
 
 class UserProfile(LoginRequiredMixin, DetailView):
@@ -53,11 +58,21 @@ class ImagesList(LoginRequiredMixin, ListView):
     template_name = 'images.html'
     context_object_name = 'images'
 
+class UserProfileUpdate(LoginRequiredMixin, UpdateView):
+    model = UserDetail
+    template_name = 'user_profile.html'
+    form_class = forms.UserInfoUpdate
+    success_url = '/'
 
-class AddImage(LoginRequiredMixin, CreateView):
+    def get_object(self):
+        return UserDetail.objects.get(user=self.request.user)
+
+
+class AddImage(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    success_message = 'You add new image! Cool'
     form_class = forms.AddImage
     template_name = 'upload.html'
-    success_url = '/images/'
+    success_url = '/profile/'
 
     def form_valid(self, form):
         object = form.save(commit=False)

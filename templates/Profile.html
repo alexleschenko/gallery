@@ -7,12 +7,19 @@
 
     <hr>
     <h3>User's Images</h3>
+    {% if messages %}
+            <div class="text-capitalize">{% for i in messages %}
+                {{ i }}
+            {% endfor %}</div>
+    {% endif %}<br>
     {% for image in images %}
         <img src="/media/{{ image.url }}"><br>
         <br>
     {% endfor %}
     <hr>
-    <input type="button" onclick="history.back()" value="Back" class="btn-link">
+    <a href="{% url 'user_update' %}" class="btn-link">Update user profile</a><br>
+    <a href="{% url 'add_image' %}" class="btn-link">Add Image</a><br>
+    <a href="{% url 'main' %}" class="btn-link">Back to main</a><br>
 
 
 {% endblock %}

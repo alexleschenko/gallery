@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -23,6 +24,7 @@ class UserCreateForm(UserCreationForm):
         if commit:
             user.save()
         UserDetail.objects.create(user=user, country=self.cleaned_data['country'])
+
         return user
 
 
@@ -31,3 +33,8 @@ class AddImage(forms.ModelForm):
     class Meta(object):
         model = Image
         exclude = ('id', 'url', 'user',)
+
+class UserInfoUpdate(forms.ModelForm):
+    class Meta(object):
+        model = UserDetail
+        exclude = ('id', 'user',)

@@ -3,9 +3,14 @@
 {% block content %}
     <form method="POST" action="{% url 'login' %}">
     {% csrf_token %}
-    {{ form.as_p }}
+        {% if messages %}
+            <div class="system-message">{% for i in messages %}
+                {{ i }}
+            {% endfor %}</div>
+        {% endif %}
+    <div class="empty-form">{{ form.as_p }}</div>
     <input type="hidden" name="next" value="{% url 'main' %}">
-    <input type="submit" value="ok">
+    <input type="submit" value="ok" class="btn-primary">
 </form>
 Or
 <a href="{% url 'user_create' %}">Create User</a>
