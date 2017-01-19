@@ -9,6 +9,9 @@
         {% endif %}
 
         {{ form.as_p }}
+        <input type="hidden" id="X-Progress-ID" name="X-Progress-ID" value=""/>
+
+        <input type="hidden" id="id" name="id" value=""/>
         <input type="submit" value="Upload" class="btn-link"><br>
         <input type="button" onclick="history.back()" value="Back" class="btn-link">
 {% endblock %}

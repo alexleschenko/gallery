@@ -3,7 +3,7 @@
 {% block content %}
     <table>
         <div class="img-circle">{% for image in images %}
-            <img src="/media/{{ image.url }}" width="100">
+            <a href="/media/{{ image.url }}"><img src="/media/{{ image.url }}" width="100"></a>
         {% endfor %}</div>
 
     </table>

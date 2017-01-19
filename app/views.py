@@ -69,7 +69,7 @@ class UserProfileUpdate(LoginRequiredMixin, UpdateView):
 
 
 class AddImage(LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    success_message = 'You add new image! Cool'
+    success_message = u'Well Done'
     form_class = forms.AddImage
     template_name = 'upload.html'
     success_url = '/profile/'
@@ -93,9 +93,7 @@ class AddImage(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return super(AddImage, self).form_valid(form)
 
 
-
-
 class ImagesListAll(LoginRequiredMixin, ListView):
     model = Image
-    template_name = 'images.html'
+    template_name = 'images_all.html'
     context_object_name = 'images'
