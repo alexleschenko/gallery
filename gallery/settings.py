@@ -128,4 +128,4 @@ MEDIA_URL = '/media/'
 
 # Max upload size in mb
 MAX_UPLOAD_SIZE = 2
-MAX_STORAGE_SIZE = 1
+MAX_STORAGE_SIZE = 10

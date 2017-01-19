@@ -1,17 +1,60 @@
 {% extends "base.html" %}
+
+
+
 {% block title %}Upload Image{% endblock %}
 {% block content %}
-    <form action="{% url 'add_image' %}" method="post" enctype="multipart/form-data" class="form">{% csrf_token %}
+    <form action="{% url 'add_image' %}" method="post" enctype="multipart/form-data" class="form"
+          id="form">{% csrf_token %}
         {% if messages %}
             {% for message in messages %}
                 {{ message }}
             {% endfor %}
         {% endif %}
 
-        {{ form.as_p }}
+        <div class="file-upload">{{ form.as_p }}</div>
         <input type="hidden" id="X-Progress-ID" name="X-Progress-ID" value=""/>
 
         <input type="hidden" id="id" name="id" value=""/>
-        <input type="submit" value="Upload" class="btn-link"><br>
+        <input type="submit" value="Upload" class="btn-link" ><br>
         <input type="button" onclick="history.back()" value="Back" class="btn-link">
+    </form>
+
+    <div class="progress">
+    <div class="bar"></div >
+    <div class="percent">0%</div >
+</div>
+
+<div id="status"></div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+
+   <script>
+
+$(function() {
+
+    var bar = $('.bar');
+    var percent = $('.percent');
+    var status = $('#status');
+
+    $('form').ajaxForm({
+        beforeSend: function() {
+            status.empty();
+            var percentVal = '0%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+        },
+        uploadProgress: function(event, position, total, percentComplete) {
+            var percentVal = percentComplete + '%';
+            bar.width(percentVal);
+            percent.html(percentVal);
+        },
+        complete: function(xhr) {
+            window.location = "{% url 'user_profile' %}";
+        }
+    });
+});
+</script>
+
 {% endblock %}
